@@ -1,0 +1,19 @@
+# .gitignore
+
+
+# Ignorar TODAS las carpetas __pycache__ en cualquier subdirectorio
+**/__pycache__/
+
+# Ignorar archivos .pyc (compilados de Python)
+*.pyc
+
+# Ignorar el entorno virtual (si aún no lo has agregado)
+asistenciaRIFD-env/
+
+# Ignorar archivos temporales (como los Excel generados)
+temp_excel/*
+
+
+# Archivos de entorno y logs
+.env
+*.log
