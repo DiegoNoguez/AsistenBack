@@ -17,3 +17,4 @@ temp_excel/*
 # Archivos de entorno y logs
 .env
 *.log
+*.pem

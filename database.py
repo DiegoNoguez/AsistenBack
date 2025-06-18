@@ -1,25 +1,37 @@
-#manera sincrona 
-#from sqlalchemy import create_engine, MetaData
-
-#DATABASE_URL = "mysql+pymysql://root@localhost/default"  # Ajusta tus credenciales
-
-#engine = create_engine(DATABASE_URL)
-#metadata = MetaData()
-
-
 #manero asíncrona
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base
+from sqlalchemy.pool import NullPool  # Opcional para ciertos casos
 import os
+from dotenv import load_dotenv
 
-# Conexión asíncrona con asyncmy (MySQL)
-DATABASE_URL = "mysql+asyncmy://root:@localhost/default?charset=utf8mb4"
+# Cargar variables de entorno
+load_dotenv()
 
-engine = create_async_engine(DATABASE_URL, echo=True)  # echo=True para ver logs # Base para modelos SQLAlchemy
-AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
-Base = declarative_base()  # Base para modelos SQLAlchemy
+# Configuración de la conexión (usa una sola llamada a os.getenv)
+DATABASE_URL = ("mysql+asyncmy://root:BuYGMrZkhEixlhvpehSraSzScbYJNNLY@maglev.proxy.rlwy.net:17631/railway")
 
-# Dependency para FastAPI
+# Configuración del motor (echo solo en desarrollo)
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=True if os.getenv("ENV") == "dev" else False,  # Desactiva en producción
+    poolclass=NullPool  # Opcional: útil para evitar problemas con conexiones persistentes
+)
+
+# Sesión asíncrona
+AsyncSessionLocal = async_sessionmaker(
+    engine,
+    expire_on_commit=False,
+    class_=AsyncSession
+)
+
+# Base para modelos
+Base = declarative_base()
+
+# Dependency para FastAPI (mejorada con manejo de errores)
 async def get_db():
     async with AsyncSessionLocal() as session:
-        yield session
+        try:
+            yield session
+        finally:
+            await session.close()  # Cierra la sesión explícitamente
