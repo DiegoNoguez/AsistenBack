@@ -149,20 +149,20 @@ async def obtener_asistencias(
 
     # Transformación de resultados (existente)
     return [
-        {
-            "idAsistencia": a.idAsistencia,
-            "matricula": a.matricula,
-            "nombre_completo": f"{nombre} {ape1} {ape2 or ''}",
-            "claveM": a.claveM,
-            "nombre_materia": nomMateria,
-            "numGrup": a.numGrup,
-            "fecha": a.fecha,
-            "horaRegistro": str(a.horaRegistro),
-            "presente": a.presente,
-            "observaciones": a.observaciones,
-            "profesor": f"{profesor_nombre} {profesor_ape1}"
-        } for a, nombre, ape1, ape2, nomMateria, profesor_nombre, profesor_ape1 in registros
-    ]
+    {
+        "idAsistencia": a.idAsistencia,
+        "matricula": a.matricula,
+        "nombre_completo": f"{nombre} {ape1} {ape2 or ''}",
+        "claveM": a.claveM,
+        "nombre_materia": nomMateria,
+        "numGrup": a.numGrup,
+        "fecha": a.fecha,
+        "horaRegistro": str(a.horaRegistro),
+        "presente": a.presente,
+        "observaciones": a.observaciones,
+        "profesor": f"{profesor_nombre} {profesor_ape1} {profesor_ape2 or ''}"
+    } for a, nombre, ape1, ape2, nomMateria, profesor_nombre, profesor_ape1, profesor_ape2 in registros
+]
 
 @router.get("/verificar-duplicado/")
 async def verificar_asistencia_duplicada_endpoint(
