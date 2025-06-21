@@ -408,9 +408,8 @@ async def obtener_horario_alumno(
             status_code=500,
             detail=f"Error al obtener el horario: {str(e)}"
         )
-
-
-# Añadir estos nuevos endpoints al archivo asistencia_api.py
+    
+#Endpoint para obtener el pase de lista de un grupo
 @router.get("/pase-lista-grupo/{numGrup}")
 async def obtener_pase_lista_grupo(
     numGrup: int,

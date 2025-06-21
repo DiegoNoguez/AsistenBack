@@ -9,6 +9,7 @@
 
 # Ignorar el entorno virtual (si aún no lo has agregado)
 asistenciaRIFD-env/
+asis/
 
 # Ignorar archivos temporales (como los Excel generados)
 temp_excel/*
